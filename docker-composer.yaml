@@ -1,0 +1,45 @@
+version: '2.4'
+services:
+    web:
+        container_name: project-web
+        hostname: project-web
+        image: nginx:1.17.9-alpine
+        cpus: 1
+        mem_limit: 256M
+        expose:
+            - 8080 # VH para Laravel (PHP)
+        ports:
+            - "8000:80"
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /path/to/nginx.conf:/etc/nginx/nginx.conf:z
+            - /path/to/nginx/conf.d:/etc/nginx/conf.d:z
+            - /path/to/projects:/var/www:z
+        links:
+            - phpfpm
+
+    phpfpm:
+        container_name: project-phpfpm
+        hostname: project-phpfpm
+        image: php:7.4-fpm-alpine
+        cpus: 1
+        mem_limit: 2G
+        expose:
+            - 9000
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /path/to/php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
+            - /path/to/projects:/var/www:z
+    supervisor:
+        container_name: project-supervisor
+        hostname: project-supervisor
+        image: php:7.4-fpm-alpine
+        cpus: 0.25
+        mem_limit: 64M
+        entrypoint: /start.sh
+        volumes:
+            - /path/to/supervisor.conf:/etc/supervisor.conf:z
+            - /path/to/supervisor/conf.d:/etc/supervisor/conf.d:z
+            - /path/to/php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
+            - /path/to/projects:/var/www:z
+            - /path/to/supervisor/start.sh:/start.sh:z
