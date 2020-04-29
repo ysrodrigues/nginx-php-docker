@@ -12,8 +12,8 @@ services:
             - "8000:80"
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - /path/to/nginx.conf:/etc/nginx/nginx.conf:z
-            - /path/to/nginx/conf.d:/etc/nginx/conf.d:z
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:z
+            - ./nginx/conf.d:/etc/nginx/conf.d:z
             - /path/to/projects:/var/www:z
         links:
             - phpfpm
@@ -28,7 +28,7 @@ services:
             - 9000
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - /path/to/php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
+            - ./php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
             - /path/to/projects:/var/www:z
 
     supervisor:
@@ -39,8 +39,8 @@ services:
         mem_limit: 64M
         entrypoint: /start.sh
         volumes:
-            - /path/to/supervisor.conf:/etc/supervisor.conf:z
-            - /path/to/supervisor/conf.d:/etc/supervisor/conf.d:z
-            - /path/to/php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
+            - ./supervisor/supervisor.conf:/etc/supervisor.conf:z
+            - ./supervisor/conf.d:/etc/supervisor/conf.d:z
+            - ./php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
             - /path/to/projects:/var/www:z
-            - /path/to/supervisor/start.sh:/start.sh:z
+            - ./supervisor/start.sh:/start.sh:z
