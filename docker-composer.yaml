@@ -30,6 +30,7 @@ services:
             - /etc/localtime:/etc/localtime:ro
             - /path/to/php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
             - /path/to/projects:/var/www:z
+
     supervisor:
         container_name: project-supervisor
         hostname: project-supervisor
