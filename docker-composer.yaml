@@ -28,7 +28,6 @@ services:
             - 9000
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - ./php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
             - /path/to/projects:/var/www:z
 
     supervisor:
@@ -41,6 +40,5 @@ services:
         volumes:
             - ./supervisor/supervisor.conf:/etc/supervisor.conf:z
             - ./supervisor/conf.d:/etc/supervisor/conf.d:z
-            - ./php-fpm/pool.d:/etc/php/7.4/fpm/pool.d:z
             - /path/to/projects:/var/www:z
             - ./supervisor/start.sh:/start.sh:z
